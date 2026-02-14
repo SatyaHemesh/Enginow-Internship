@@ -1,0 +1,389 @@
+/* --- 1. THEME VARIABLES --- */
+:root {
+    /* Rose Red / Pink Theme */
+    --primary: #be123c;      /* Rose 700 */
+    --primary-glow: rgba(225, 29, 72, 0.5);
+    --secondary: #fb7185;    /* Rose 400 */
+    
+    /* Dark Mode Defaults */
+    --bg-dark: #0f0505;
+    --bg-card: rgba(40, 10, 20, 0.7);
+    --glass-border: rgba(255, 200, 200, 0.1);
+    
+    --text-main: #fff1f2;
+    --text-muted: #fecdd3;
+    --font-main: 'Outfit', sans-serif;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Mode Overrides */
+body.light-mode {
+    --bg-dark: #fff1f2;      /* Rose 50 */
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --text-main: #881337;    /* Rose 900 - Dark Text */
+    --text-muted: #9f1239;   /* Rose 800 */
+    --glass-border: rgba(190, 18, 60, 0.1);
+    --primary: #be123c;
+    --secondary: #e11d48;
+}
+
+/* --- Global Reset --- */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: var(--font-main); scroll-behavior: smooth;
+}
+
+html {
+    scroll-padding-top: 90px;
+    max-width: 100%; overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* --- Glassmorphism --- */
+.glass-form, .project-card, .info-box, .skill-category, .cert-card {
+    background: var(--bg-card);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Navigation (Fixed for Light Mode) --- */
+header {
+    position: fixed; width: 100%; top: 0; z-index: 1000;
+    height: 80px;
+    background: rgba(15, 5, 5, 0.7); /* Default Dark Glass */
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+}
+
+/* LIGHT MODE NAVBAR FIX */
+body.light-mode header {
+    background: rgba(255, 241, 242, 0.85); /* Light Rose Glass */
+    border-bottom: 1px solid rgba(190, 18, 60, 0.1);
+}
+
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; height: 100%; margin: 0 auto; padding: 0 2rem;
+}
+
+.logo {
+    font-size: 1.8rem; font-weight: 800; color: var(--text-main);
+    text-decoration: none; letter-spacing: -1px;
+}
+.logo span { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
+
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-item {
+    color: var(--text-muted); font-weight: 500; text-decoration: none;
+    transition: color 0.3s ease; position: relative;
+}
+.nav-item:hover, .nav-item.active { color: var(--primary); }
+.nav-item::after {
+    content: ''; position: absolute; width: 0; height: 2px;
+    bottom: -5px; left: 0; background-color: var(--primary);
+    transition: width 0.3s;
+}
+.nav-item:hover::after, .nav-item.active::after { width: 100%; }
+
+.nav-controls { display: flex; align-items: center; gap: 25px; }
+#theme-toggle {
+    background: transparent; border: 1px solid var(--glass-border);
+    color: var(--text-main); font-size: 1.1rem; cursor: pointer;
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* --- Hero Section --- */
+.hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    position: relative; padding: 0 2rem; text-align: center;
+}
+.hero-content { z-index: 2; width: 100%; max-width: 800px; }
+
+.shape { position: absolute; filter: blur(90px); z-index: 0; opacity: 0.5; }
+.shape-1 { top: 10%; left: 0; width: 500px; height: 500px; background: var(--primary); border-radius: 50%; }
+.shape-2 { bottom: 10%; right: 0; width: 400px; height: 400px; background: var(--secondary); border-radius: 50%; }
+
+.hero-content h1 {
+    font-size: 4rem; margin: 10px 0;
+    background: linear-gradient(to right, #fff, #fda4af);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+body.light-mode .hero-content h1 { 
+    background: linear-gradient(to right, #881337, #be123c); 
+    -webkit-background-clip: text; background-clip: text;
+}
+.typing-text { font-size: 1.5rem; color: var(--primary); margin-bottom: 1.5rem; }
+
+.btn {
+    padding: 12px 32px; border-radius: 50px; text-decoration: none;
+    font-weight: 600; display: inline-block; margin: 10px;
+    transition: var(--transition);
+}
+.btn-primary { background: var(--primary); color: white; box-shadow: 0 0 20px var(--primary-glow); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px var(--primary-glow); }
+.btn-secondary { border: 2px solid var(--glass-border); color: var(--text-main); }
+.btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+/* --- About Section (New Layout) --- */
+.section { padding: 80px 0; position: relative; z-index: 1; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.section-title {
+    font-size: 2.5rem; text-align: center; margin-bottom: 3rem;
+    position: relative; color: var(--text-main);
+}
+.about-wrapper { padding: 3rem; margin-top: 1rem; }
+.about-content h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary); }
+.about-content p { margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-muted); }
+
+.about-highlights {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem; margin-top: 2rem; padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+}
+.highlight-item { display: flex; align-items: center; gap: 15px; }
+.highlight-item i { font-size: 2rem; color: var(--primary); }
+.highlight-item h4 { font-size: 1rem; margin: 0; }
+.highlight-item small { color: var(--text-muted); }
+
+/* --- Skills --- */
+.skills-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+.skill-category { padding: 2rem; }
+.skill-category h3 { margin-bottom: 1.5rem; color: var(--secondary); }
+.skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.skill-item { display: flex; align-items: center; gap: 10px; font-weight: 500; }
+
+/* --- Certifications (Clean Card Layout) --- */
+.certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+.cert-card {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.5rem; transition: var(--transition);
+}
+.cert-card:hover {
+    transform: translateY(-5px); border-color: var(--primary);
+    box-shadow: 0 10px 30px -10px var(--primary-glow);
+}
+.logo-wrapper {
+    flex-shrink: 0; width: 50px; height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%; padding: 5px;
+    display: flex; align-items: center; justify-content: center;
+}
+.cert-logo-img { width: 100%; height: 100%; object-fit: contain; }
+.cert-card-content h4 { font-size: 1rem; margin-bottom: 3px; color: var(--text-main); }
+.cert-card-content p { font-size: 0.85rem; color: var(--text-muted); }
+
+/* --- Projects --- */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.project-card { padding: 2rem; display: flex; flex-direction: column; height: 100%; }
+.project-header { display: flex; justify-content: space-between; margin-bottom: 1.5rem; }
+.folder-icon { font-size: 2.5rem; color: var(--primary); }
+.project-links a { color: var(--text-muted); font-size: 1.2rem; }
+.tags { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1rem; }
+.tags span { font-size: 0.85rem; color: var(--secondary); }
+
+/* --- Contact --- */
+.contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; }
+.contact-item i { color: var(--primary); font-size: 1.2rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group input, .form-group textarea {
+    width: 100%; padding: 12px; background: rgba(0,0,0,0.1);
+    border: 1px solid var(--glass-border); border-radius: 8px;
+    color: var(--text-main); outline: none;
+}
+
+/* --- Footer --- */
+.footer {
+    text-align: center; padding: 2rem; border-top: 1px solid var(--glass-border);
+    margin-top: 4rem; background: rgba(15, 5, 5, 0.95);
+}
+.socials a { color: var(--text-muted); font-size: 1.2rem; margin: 0 10px; }
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed; top: 80px; right: -100%; width: 100%; height: calc(100vh - 80px);
+        background: var(--bg-dark); flex-direction: column;
+        align-items: center; justify-content: center; transition: 0.3s;
+    }
+    .nav-links.active { right: 0; }
+    .hero-content h1 { font-size: 2.5rem !important; }
+    .about-highlights, .contact-container { grid-template-columns: 1fr; }
+    .hamburger { display: block; cursor: pointer; }
+    .bar { width: 25px; height: 3px; background: var(--text-main); margin: 5px 0; }
+}
+
+/* --- HERO SOCIALS (FIXED VISIBILITY) --- */
+.hero .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.hero-content.centered {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Center and Style Social Icons */
+.hero-socials {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0 2rem 0;
+    justify-content: center;
+}
+
+.hero-socials a {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Force White & Glass Effect */
+    color: #ffffff !important; 
+    background: rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    
+    border-radius: 50%;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.hero-socials a:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white !important;
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* --- ABOUT SECTION (Split Layout) --- */
+.about-split-layout {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem;
+}
+
+/* 1. Profile Image Styling */
+.about-image-col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-img-wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 20px; /* Rounded square looks more professional for About */
+    overflow: hidden;
+    border: 3px solid var(--glass-border);
+    box-shadow: 0 10px 40px -10px var(--primary-glow);
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05);
+}
+
+/* 2. Text Styling */
+.about-text-col {
+    flex: 1.5;
+}
+
+.about-text-col h3 {
+    font-size: 2rem;
+    color: var(--text-main);
+    margin-bottom: 0.2rem;
+}
+
+.about-text-col .subtitle {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* --- RESPONSIVE FIXES --- */
+@media (max-width: 900px) {
+    /* Stack About Section vertically on mobile */
+    .about-split-layout {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem 1.5rem;
+    }
+
+    .about-highlights {
+        justify-content: center; /* Center the icons grid */
+        text-align: left; /* Keep icon text readable */
+    }
+
+    .profile-img-wrapper {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+/* --- LIGHT MODE VISIBILITY FIXES --- */
+
+/* 1. Fix Social Icons in Hero Section */
+body.light-mode .hero-socials a {
+    /* Change icon color to Dark Rose in Light Mode */
+    color: var(--primary) !important; 
+    
+    /* Make the background semi-transparent white with a border */
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--primary);
+    box-shadow: 0 4px 6px rgba(190, 18, 60, 0.15);
+}
+
+body.light-mode .hero-socials a:hover {
+    /* On hover, flip to filled Dark Rose */
+    background: var(--primary);
+    color: #ffffff !important;
+}
+
+/* 2. Fix Certificate Logo Backgrounds */
+/* This adds a border to the logo circles so they don't blend into the light background */
+body.light-mode .logo-wrapper {
+    background: #ffffff;
+    border: 1px solid rgba(190, 18, 60, 0.2); 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* 3. Fix Project Folder Icons */
+body.light-mode .folder-icon {
+    color: var(--primary);
+    text-shadow: none; /* Remove glow in light mode for sharpness */
+}
